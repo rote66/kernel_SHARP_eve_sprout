@@ -10,10 +10,13 @@ if [ ! -d repack_zip/system ]; then
 	mkdir repack_zip/system
 	mkdir repack_zip/system/lib
 	mkdir repack_zip/system/lib/modules
+        mkdir repack_zip/system/lib/modules/pronto
 fi
 
 mv arch/arm/boot/zImage-dtb repack_zip/emp/zImage
 find -name "*.ko" -exec mv {} repack_zip/system/lib/modules \;
+repack_zip/emp/strip --strip-unneeded repack_zip/system/lib/modules/*
+mv repack_zip/system/lib/modules/wlan.ko repack_zip/system/lib/modules/pronto/pronto_wlan.ko
 
 cd repack_zip
 zip -r kernel.zip *
